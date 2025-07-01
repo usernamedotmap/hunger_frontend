@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import CartContext from "../cart/CartContext";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +9,14 @@ const CartLayout = ({ drawerOpen, toggleDrawer }) => {
   const { cart } = useSelector((state) => state.cart);
   const userId = user ? user._id : null;
 
-  console.log("userId from cartLaoutout:", userId);
-  console.log("guestId from cartLaoutout:", guestId);
 
+  const products = Array.isArray(cart?.products)
+  ? cart.products
+  : Array.isArray(cart?.userCart?.products)
+  ? cart.userCart.products
+  : [];
+
+  
   const handleCheckout = () => {
     toggleDrawer();
     if (!user) {
@@ -39,10 +43,10 @@ const CartLayout = ({ drawerOpen, toggleDrawer }) => {
       {/* main show HAHAHHAHA*/}
       <div className="flex-grow p-4 overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">Your Own Cart</h2>
-        {cart && cart?.products?.length > 0 ? (
+        {products.length > 0 ? (
           <CartContext cart={cart} userId={userId} guestId={guestId} />
         ) : (
-          <p>Your cart is empty po 😘</p>
+          <p>Your cart is empty :{"("}</p>
         )}
       </div>
 
@@ -53,10 +57,10 @@ const CartLayout = ({ drawerOpen, toggleDrawer }) => {
               onClick={handleCheckout}
               className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800"
             >
-              CheckmeOut
+              Check Out
             </button>
             <p className="text-sm text-center tracking-tighter text-gray-500 mt-2">
-              Please, Please, Please. Don't prove I'm right
+            
             </p>
           </>
         )}

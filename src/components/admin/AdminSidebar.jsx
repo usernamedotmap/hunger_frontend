@@ -24,12 +24,12 @@ const AdminSidebar = () => {
     <div className="p-8">
       <div className="mb-6">
         <Link to="/admin" className="text-2xl font-medium">
-          Kreme Kreme
+          Hunger Halt
         </Link>
       </div>
 
-      <h2 className="text-2xl font-medium my-8 text-center">
-        Admin dashboard ngani
+      <h2 className="text-xl font-bold my-8 text-center">
+        Admin Dashboard
       </h2>
 
       <nav className="flex flex-col space-y-2">

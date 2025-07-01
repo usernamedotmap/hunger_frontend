@@ -8,6 +8,9 @@ const OrderPage = () => {
   const dispatch = useDispatch();
   const { orders, loading, error } = useSelector((state) => state.orders);
 
+  console.log("orders:", orders);
+
+
   useEffect(() => {
     dispatch(fetchUserOrders());
   }, [dispatch]);
@@ -78,7 +81,7 @@ const OrderPage = () => {
                           : "text-red-700 bg-red-100"
                       } px-2 py-1 rounded-lg font-medium`}
                     >
-                      {order.isPaid ? "Bayad na!" : "Bayaran mo na!!!!"}
+                      {order.isPaid ? "Paid!" : "Not Paid!"}
                     </span>
                   </td>
                 </tr>

@@ -12,26 +12,32 @@ const Register = () => {
     password: "",
   });
   const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { user, guestId } = useSelector((state) => state.auth);
-    const { cart } = useSelector((state) => state.cart);
-  
-    const redirect = new URLSearchParams(location.search).get("redirect") || "/";
-    const isCheckoutRedirect = redirect.includes("checkout");
-  
-    useEffect(() => {
-      if (user) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, guestId } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/";
+  const isCheckoutRedirect = redirect.includes("checkout");
+
+  useEffect(() => {
+    if (user) {
+      if (
+        Array.isArray(cart?.products) &&
+        cart.products.length > 0 &&
+        guestId
+      ) {
         if (cart?.products.length > 0 && guestId) {
           dispatch(mergeCart({ guestId, user })).then(() =>
+            
             navigate(isCheckoutRedirect ? "/checkout" : "/")
           );
         } else {
           navigate(isCheckoutRedirect ? "/checkout" : "/");
         }
       }
-    }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch]);
-  
+    }
+  }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,12 +51,10 @@ const Register = () => {
           className="w-full max-w-md bg-white p-8 rounded-lg  border-2  shadow-lg"
         >
           <div className="flex justify-center mb-6">
-            <h2 className="text-xl font-medium">Krema Kreme</h2>
+            <h2 className="text-xl font-medium">Hunger Halt</h2>
           </div>
-          <h2 className="text-2xl font-bold text-center mb-6 ">HeeeLUU</h2>
-          <p className="text-center mb-6">
-           Try to register
-          </p>
+          <h2 className="text-2xl font-bold text-center mb-6 ">Create account</h2>
+          <p className="text-center mb-6">Try to register</p>
 
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-2">Name</label>
@@ -99,7 +103,10 @@ const Register = () => {
           </button>
           <p className="mt-6 text-center text-md text-gray-700">
             Already have an account? Click f8 here{" "}
-            <Link to={`/login?redirect=${encodeURIComponent("redirect")}`} className="text-blue-500">
+            <Link
+              to={`/login?redirect=${encodeURIComponent(redirect)}`}
+              className="text-blue-500"
+            >
               Register
             </Link>
           </p>

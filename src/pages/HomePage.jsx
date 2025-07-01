@@ -5,17 +5,15 @@ import NewDonuts from "../products/NewDonuts";
 import DetailsProduct from "../products/DetailsProduct";
 import ProductGrid from "../products/ProductGrid";
 import FeaturedCollection from "../products/FeaturedCollection";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import { fetchProductByFilters } from "../redux/slices/productSlice";
 import api from "../components/common/ExpiredToken";
-
-
+import Footer from "../components/common/Footer";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state) => state.products);
   const [bestDonutsProduct, setBestDonutsProduct] = useState([]);
 
   useEffect(() => {
@@ -27,9 +25,7 @@ const HomePage = () => {
     );
     const fetchBestProducts = async () => {
       try {
-        const response = await api.get(
-          `/products/best-seller`
-        );
+        const response = await api.get(`/products/best-seller`);
         setBestDonutsProduct(response.data);
       } catch (error) {
         console.log(error);
@@ -48,7 +44,6 @@ const HomePage = () => {
      {bestDonutsProduct ? ( <DetailsProduct productId={bestDonutsProduct._id} />) : (
       <p>Loading best product ...</p>
      ) } */}
-     
 
       {/* <div className="container mx-auto">
         <h2 className="text-3xl text-center font-bold mb-4 capitalize">
@@ -56,9 +51,10 @@ const HomePage = () => {
         </h2> 
 
       </div> */}
-        {/* <ProductGrid products={products} loading={loading} error={error} /> */}
+      {/* <ProductGrid products={products} loading={loading} error={error} /> */}
 
-      <FeaturedCollection />
+      {/* <FeaturedCollection /> */}
+      <Footer />
     </div>
   );
 };
